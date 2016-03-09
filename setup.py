@@ -5,6 +5,7 @@
 from setuptools import setup, Extension
 import sys
 from os import path
+import codecs
 
 platform_sources = []
 platform_libs = []
@@ -36,7 +37,7 @@ simpleaudio_c_ext = Extension(
 VERSION = "1.0.0"
 
 # Get the long description from the relevant file
-with open(path.join(path.abspath(path.dirname(__file__)), 'README.rst'),
+with codecs.open(path.join(path.abspath(path.dirname(__file__)), 'README.rst'),
           encoding='utf-8') as f:
     long_description = f.read()
 

@@ -177,6 +177,9 @@ static PyMethodDef _simpleaudio_methods[] = {
 
 static char doc_string [] = "_simpleaudio is the module containing the C-extension that handles the low-level OS-specific API interactions for audio playback.";
 
+// see http://python3porting.com/cextensions.html
+#if PY_MAJOR_VERSION >= 3
+
 static struct PyModuleDef _simpleaudio_module = {
    PyModuleDef_HEAD_INIT,
    "_simpleaudio",   /* name of module */
@@ -186,12 +189,23 @@ static struct PyModuleDef _simpleaudio_module = {
    _simpleaudio_methods
 };
 
+#endif
+
 PyMODINIT_FUNC
+#if PY_MAJOR_VERSION >= 3
 PyInit__simpleaudio(void)
+#else
+init_simpleaudio(void)
+#endif
 {
     PyObject *m;
 
+#if PY_MAJOR_VERSION >= 3
     m = PyModule_Create(&_simpleaudio_module);
+#else
+    m = Py_InitModule3("_simpleaudio", _simpleaudio_methods, doc_string);
+#endif
+
     if (m == NULL)
         return NULL;
 
